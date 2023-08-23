@@ -1,43 +1,47 @@
-//your code here!
-let list = document.querySelector("#infi-list");
-console.log(list);
+const infiList = document.getElementById("infi-list");
 
-for(let i=1; i<=10; i++){
-  list.innerHTML += `<li>Item ${i}</li>`
+// Define the number of items to add on each scroll
+const itemsToAdd = 2;
+
+// Variable to keep track of the current item number
+let currentItemNumber = 10;
+
+// Function to add new list items
+function addListItems() {
+  for (let i = 0; i < itemsToAdd; i++) {
+    const listItem = document.createElement("li");
+    listItem.textContent = "Item " + (++currentItemNumber);
+    infiList.appendChild(listItem);
+  }
 }
 
-let n = 10;
+// Function to check if the user has reached the end of the list
+function isEndOfList() {
+  const scrollTop = infiList.scrollTop;
+  const scrollHeight = infiList.scrollHeight;
+  const clientHeight = infiList.clientHeight;
 
-list.addEventListener("scroll", ()=>{
-  // console.log("used scrolled the list");
-  if(list.scrollHeight - list.scrollTop - list.clientHeight < 1){
-    // console.log("you reached the end");
-    list.innerHTML += `
-    <li>Item ${n+1}</li>
-    <li>Item ${n+2}</li>
-    `
-    n+=2;
-  }
-})//your code here!
-
-//your code here!
-let list = document.querySelector("#infi-list");
-console.log(list);
-
-for(let i=1; i<=10; i++){
-  list.innerHTML += `<li>Item ${i}</li>`
+  return scrollTop + clientHeight >= scrollHeight;
 }
 
-let n = 10;
-
-list.addEventListener("scroll", ()=>{
-  // console.log("used scrolled the list");
-  if(list.scrollHeight - list.scrollTop - list.clientHeight < 1){
-    // console.log("you reached the end");
-    list.innerHTML += `
-    <li>Item ${n+1}</li>
-    <li>Item ${n+2}</li>
-    `
-    n+=2;
+// Event listener for scroll event
+infiList.addEventListener("scroll", function () {
+  if (isEndOfList()) {
+    addListItems();
   }
-})
+});
+
+// Initially add list items
+addListItems();
+
+
+
+
+
+
+// Add initial list items
+for (let i = 0; i < 10; i++) {
+  const listItem = document.createElement("li");
+  listItem.textContent = "Item " + (i + 1);
+  infiList.appendChild(listItem);
+}
